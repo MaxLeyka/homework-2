@@ -1,11 +1,20 @@
-const fSum = (a) =>{
-    return function (b) {
-        return function (c) {
-            return a+b+c
-        }
+function fSum(a) {
+    let currentSum = a;
+
+    function addNext(b) {
+        currentSum += b;
+        return addNext;
     }
+
+    addNext.valueOf = function() {
+        return currentSum;
+    };
+
+    return addNext;
 }
-console.log(fSum(2)(3)(5))
+
+console.log(Number(fSum(1)(2)(3)));
+console.log(Number(fSum(1)(2)(2)(1)));
 
 function strToObj(str) {
     return str.split('.').reverse().reduce((acc, current) => ({
